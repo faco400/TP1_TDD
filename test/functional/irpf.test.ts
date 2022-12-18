@@ -15,3 +15,9 @@ test('Calculate base value of tax with one income and without deductions', () =>
   const deduction: number[] = []
   expect(calculateBaseValue(income, deduction)).toBe(1000.0)
 })
+
+test('Calculate base value of tax with more than one income and one deduction', () => {
+  const income: number[] = [2000.0, 3000.0]
+  const deduction: number[] = [1000.0]
+  expect(calculateBaseValue(income, deduction)).toBe(4000.0)
+})
