@@ -1,5 +1,5 @@
 import app from '@src/index';
-import {calculateBaseValue} from '@src/calc';
+import {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange} from '@src/calc';
 import request from 'supertest';
 
 describe('Beach IRPF functional tests', () => {
@@ -17,3 +17,9 @@ test.each([
 ])("Calculate base value of tax", (incomes, deductions, expected) => {
   expect(calculateBaseValue(incomes, deductions)).toBe(expected)
 })
+
+test('Calculate Base Value per range for number on 1° range', () => {
+  const baseValue: number = 1800.0
+  expect(calculateBaseValuePerRange(baseValue, table_2022)).toStrictEqual([1800.0, 0, 0, 0, 0])
+})
+
