@@ -20,10 +20,18 @@ test.each([
 
 test('Calculate Base Value per range for number on 1° range', () => {
   const baseValue: number = 1800.0
-  expect(calculateBaseValuePerRange(baseValue, table_2022)).toStrictEqual([1800.0, 0, 0, 0, 0])
+  const expected = [1800.0, 0, 0, 0, 0]
+  expect(calculateBaseValuePerRange(baseValue, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
 })
 
 test('Calculate Base Value per range on 2° range', () => {
   const baseValue: number = 2291.0
-  expect(calculateBaseValuePerRange(baseValue, table_2022)).toStrictEqual([1903.98, 387.02, 0, 0, 0])
+  const expected = [1903.98, 387.02, 0, 0, 0]
+  expect(calculateBaseValuePerRange(baseValue, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
+})
+
+test('Calculate Base Value per range for number on 5° range', () => {
+  const baseValue: number = 9171.61
+  const expected = [1903.98, 922.67, 924.40, 913.63, 4506.93]
+  expect(calculateBaseValuePerRange(baseValue, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
 })
