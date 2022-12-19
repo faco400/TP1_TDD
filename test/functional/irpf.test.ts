@@ -35,20 +35,11 @@ test.each([
   expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
 })
 
-test('Sum range base values', () => {
-  const baseValues = [1800.0, 0, 0, 0, 0]
-  const expected = 1800.0
+test.each([
+  [[1800.0, 0, 0, 0, 0], 1800.0],
+  [[1903.98, 387.02, 0, 0, 0], 2291.0],
+  [[1903.98, 922.67, 924.40, 913.63, 4506.93], 9171.61]
+])('Sum range base values', (baseValues, expected) => {
   expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
 })
 
-test('Sum range base values 2', () => {
-  const baseValues = [1903.98, 387.02, 0, 0, 0]
-  const expected = 2291
-  expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
-})
-
-test('Sum range base values 3', () => {
-  const baseValues = [1903.98, 922.67, 924.40, 913.63, 4506.93]
-  const expected = 9171.61
-  expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
-})
