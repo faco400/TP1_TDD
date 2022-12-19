@@ -7,7 +7,6 @@ import {
   calculateTotalRangeBaseValues, 
   calculateTotalIRPF} from '@src/calc';
 import request from 'supertest';
-import { TextDecoderStream } from 'stream/web';
 
 describe('Beach IRPF functional tests', () => {
   it('Should get main route', async () => {
@@ -17,42 +16,44 @@ describe('Beach IRPF functional tests', () => {
   });
 });
 
-test.each([
-  [[1000.0], [], 1000.0],
-  [[2000.0, 3000.0], [1000.0], 4000.0],
-  [[1000.0, 2000.0], [500.0, 200.0], 2300.0]
-])("Calculate base value of tax", (incomes, deductions, expected) => {
-  expect(calculateBaseValue(incomes, deductions)).toBe(expected)
-})
+describe('Calculations for IRPF Tax', () => {
+  test.each([
+    [[1000.0], [], 1000.0],
+    [[2000.0, 3000.0], [1000.0], 4000.0],
+    [[1000.0, 2000.0], [500.0, 200.0], 2300.0]
+  ])("Calculate base value of tax", (incomes, deductions, expected) => {
+    expect(calculateBaseValue(incomes, deductions)).toBe(expected)
+  })
 
-test.each([
-  [1800.0, [1800.0, 0, 0, 0, 0]],
-  [2291, [1903.98, 387.02, 0, 0, 0]],
-  [9171.61, [1903.98, 922.67, 924.40, 913.63, 4506.93]]
-])('Calculate Base Value per range', (baseValue, expected) => {
-  expect(calculateBaseValuePerRange(baseValue, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
-})
+  test.each([
+    [1800.0, [1800.0, 0, 0, 0, 0]],
+    [2291, [1903.98, 387.02, 0, 0, 0]],
+    [9171.61, [1903.98, 922.67, 924.40, 913.63, 4506.93]]
+  ])('Calculate Base Value per range', (baseValue, expected) => {
+    expect(calculateBaseValuePerRange(baseValue, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
+  })
 
-test.each([
-  [[1000.0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
-  [[1903.98, 387.02, 0, 0, 0], [0, 29.03, 0, 0, 0]],
-  [[1903.98, 922.67, 924.40, 913.63, 4506.93], [0, 69.20, 138.66, 205.57, 1239.41]]
-])('Calculate IRPF Tax value per range', (rangeValues, expected) => {
-  expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
-})
+  test.each([
+    [[1000.0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+    [[1903.98, 387.02, 0, 0, 0], [0, 29.03, 0, 0, 0]],
+    [[1903.98, 922.67, 924.40, 913.63, 4506.93], [0, 69.20, 138.66, 205.57, 1239.41]]
+  ])('Calculate IRPF Tax value per range', (rangeValues, expected) => {
+    expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
+  })
 
-test.each([
-  [[1800.0, 0, 0, 0, 0], 1800.0],
-  [[1903.98, 387.02, 0, 0, 0], 2291.0],
-  [[1903.98, 922.67, 924.40, 913.63, 4506.93], 9171.61]
-])('Sum range base values', (baseValues, expected) => {
-  expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
-})
-
-test.each([
-  [[0, 29.03, 0, 0, 0], 29.03],
-  [[0, 69.20, 138.66, 205.57, 1239.41], 1652.84],
-  [[0, 69.20, 138.66, 160.37, 0], 368.23]
-])('Calculate IRPF Total', (values, expected) => {
-  expect(calculateTotalIRPF(values)).toEqual(expect.closeTo(expected, 2))
+  test.each([
+    [[1800.0, 0, 0, 0, 0], 1800.0],
+    [[1903.98, 387.02, 0, 0, 0], 2291.0],
+    [[1903.98, 922.67, 924.40, 913.63, 4506.93], 9171.61]
+  ])('Sum range base values', (baseValues, expected) => {
+    expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
+  })
+  
+  test.each([
+    [[0, 29.03, 0, 0, 0], 29.03],
+    [[0, 69.20, 138.66, 205.57, 1239.41], 1652.84],
+    [[0, 69.20, 138.66, 160.37, 0], 368.23]
+  ])('Calculate IRPF Total', (values, expected) => {
+    expect(calculateTotalIRPF(values)).toEqual(expect.closeTo(expected, 2))
+  })
 })
