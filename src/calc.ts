@@ -1,3 +1,5 @@
+import { runMain } from "module"
+
 type Table = Array<Array<number>>
 
 const table_2022: Table = [
@@ -33,7 +35,7 @@ function calculateIRPFTaxPerRange(baseValues: number[], table: Table): number[] 
 }
 
 function calculateTotalRangeBaseValues(baseValues: number[]): number {
-    return 1800
+    return sum(baseValues)
 }
 
 export {

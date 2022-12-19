@@ -40,3 +40,9 @@ test('Sum range base values', () => {
   const expected = 1800.0
   expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
 })
+
+test('Sum range base values 2', () => {
+  const baseValues = [1903.98, 387.02, 0, 0, 0]
+  const expected = 2291
+  expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
+})
