@@ -26,20 +26,10 @@ test.each([
   expect(calculateBaseValuePerRange(baseValue, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
 })
 
-test('Calculate IRPF per Range with value on the first range', () => {
-  const rangeValues = [1000.0, 0, 0, 0, 0]
-  const expected = [0, 0, 0, 0, 0]
+test.each([
+  [[1000.0, 0, 0, 0, 0], [0, 0, 0, 0, 0]],
+  [[1903.98, 387.02, 0, 0, 0], [0, 29.03, 0, 0, 0]],
+  [[1903.98, 922.67, 924.40, 913.63, 4506.93], [0, 69.20, 138.66, 205.57, 1239.41]]
+])('Calculate IRPF Tax value per range', (rangeValues, expected) => {
   expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
-})
-
-test('Calculate IPRF per range with value on the second range', () => {
-  const rangeValues = [1903.98, 387.02, 0, 0, 0]
-  const expected = [0, 29.03, 0, 0, 0]
-  expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value)=> expect.closeTo(value, 2)))
-})
-
-test('Calculate IPRF per range with value on the last range', () => {
-  const rangeValues = [1903.98, 922.67, 924.40, 913.63, 4506.93]
-  const expected = [0, 69.20, 138.66, 205.57, 1239.41]
-  expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value)=> expect.closeTo(value, 2)))
 })
