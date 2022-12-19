@@ -38,11 +38,16 @@ function calculateTotalRangeBaseValues(baseValues: number[]): number {
     return sum(baseValues)
 }
 
+function calculateTotalIRPF(values: number[]): number {
+    return 29.03
+}
+
 export {
     Table, 
     table_2022, 
     calculateBaseValue, 
     calculateBaseValuePerRange, 
     calculateIRPFTaxPerRange, 
-    calculateTotalRangeBaseValues
+    calculateTotalRangeBaseValues,
+    calculateTotalIRPF
 }

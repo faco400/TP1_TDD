@@ -1,5 +1,11 @@
 import app from '@src/index';
-import {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange, calculateIRPFTaxPerRange, calculateTotalRangeBaseValues} from '@src/calc';
+import {
+  table_2022, 
+  calculateBaseValue, 
+  calculateBaseValuePerRange, 
+  calculateIRPFTaxPerRange, 
+  calculateTotalRangeBaseValues, 
+  calculateTotalIRPF} from '@src/calc';
 import request from 'supertest';
 import { TextDecoderStream } from 'stream/web';
 
@@ -43,3 +49,8 @@ test.each([
   expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
 })
 
+test('Calculate IRPF Total', () => {
+  const values = [0, 29.03, 0, 0, 0]
+  const expected = 29.03
+  expect(calculateTotalIRPF(values)).toEqual(expect.closeTo(expected, 2))
+})
