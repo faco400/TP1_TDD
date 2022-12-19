@@ -32,3 +32,8 @@ test('Calculate IRPF per Range with value on the first range', () => {
   expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
 })
 
+test('Calculate IPRF per range with value on the second range', () => {
+  const rangeValues = [1903.98, 387.02, 0, 0, 0]
+  const expected = [0, 29.03, 0, 0, 0]
+  expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value)=> expect.closeTo(value, 2)))
+})
