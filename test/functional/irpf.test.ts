@@ -54,3 +54,9 @@ test('Calculate IRPF Total', () => {
   const expected = 29.03
   expect(calculateTotalIRPF(values)).toEqual(expect.closeTo(expected, 2))
 })
+
+test('Calculate IRPF Total 2', () => {
+  const values = [0, 69.20, 138.66, 205.57, 1239.41]
+  const expected = 1652.84
+  expect(calculateTotalIRPF(values)).toEqual(expect.closeTo(expected, 2))
+})

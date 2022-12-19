@@ -39,7 +39,7 @@ function calculateTotalRangeBaseValues(baseValues: number[]): number {
 }
 
 function calculateTotalIRPF(values: number[]): number {
-    return 29.03
+    return sum(values)
 }
 
 export {
