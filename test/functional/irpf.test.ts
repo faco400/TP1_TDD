@@ -1,6 +1,7 @@
 import app from '@src/index';
-import {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange, calculateIRPFTaxPerRange} from '@src/calc';
+import {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange, calculateIRPFTaxPerRange, calculateTotalRangeBaseValues} from '@src/calc';
 import request from 'supertest';
+import { TextDecoderStream } from 'stream/web';
 
 describe('Beach IRPF functional tests', () => {
   it('Should get main route', async () => {
@@ -32,4 +33,10 @@ test.each([
   [[1903.98, 922.67, 924.40, 913.63, 4506.93], [0, 69.20, 138.66, 205.57, 1239.41]]
 ])('Calculate IRPF Tax value per range', (rangeValues, expected) => {
   expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
+})
+
+test('Sum range base values', () => {
+  const baseValues = [1800.0, 0, 0, 0, 0]
+  const expected = 1800.0
+  expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
 })

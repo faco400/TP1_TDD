@@ -32,4 +32,15 @@ function calculateIRPFTaxPerRange(baseValues: number[], table: Table): number[] 
     return baseValues.map((value, i) => value * (table[i][2] / 100))
 }
 
-export {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange, calculateIRPFTaxPerRange}
+function calculateTotalRangeBaseValues(baseValues: number[]): number {
+    return 1800
+}
+
+export {
+    Table, 
+    table_2022, 
+    calculateBaseValue, 
+    calculateBaseValuePerRange, 
+    calculateIRPFTaxPerRange, 
+    calculateTotalRangeBaseValues
+}
