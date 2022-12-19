@@ -49,14 +49,10 @@ test.each([
   expect(calculateTotalRangeBaseValues(baseValues)).toEqual(expect.closeTo(expected, 2))
 })
 
-test('Calculate IRPF Total', () => {
-  const values = [0, 29.03, 0, 0, 0]
-  const expected = 29.03
-  expect(calculateTotalIRPF(values)).toEqual(expect.closeTo(expected, 2))
-})
-
-test('Calculate IRPF Total 2', () => {
-  const values = [0, 69.20, 138.66, 205.57, 1239.41]
-  const expected = 1652.84
+test.each([
+  [[0, 29.03, 0, 0, 0], 29.03],
+  [[0, 69.20, 138.66, 205.57, 1239.41], 1652.84],
+  [[0, 69.20, 138.66, 160.37, 0], 368.23]
+])('Calculate IRPF Total', (values, expected) => {
   expect(calculateTotalIRPF(values)).toEqual(expect.closeTo(expected, 2))
 })
