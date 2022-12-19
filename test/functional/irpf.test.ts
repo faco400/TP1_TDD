@@ -1,5 +1,5 @@
 import app from '@src/index';
-import {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange} from '@src/calc';
+import {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange, calculateIRPFTaxPerRange} from '@src/calc';
 import request from 'supertest';
 
 describe('Beach IRPF functional tests', () => {
@@ -25,3 +25,10 @@ test.each([
 ])('Calculate Base Value per range', (baseValue, expected) => {
   expect(calculateBaseValuePerRange(baseValue, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
 })
+
+test('Calculate IRPF per Range with value on the first range', () => {
+  const rangeValues = [1000.0, 0, 0, 0, 0]
+  const expected = [0, 0, 0, 0, 0]
+  expect(calculateIRPFTaxPerRange(rangeValues, table_2022)).toEqual(expected.map((value) => expect.closeTo(value, 2)))
+})
+

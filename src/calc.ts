@@ -28,4 +28,8 @@ function calculateBaseValuePerRange(baseValue: number, table: Table) {
     })
 }
 
-export {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange}
+function calculateIRPFTaxPerRange(baseValues: number[], table: Table) {
+    return [0, 0, 0, 0, 0]
+}
+
+export {Table, table_2022, calculateBaseValue, calculateBaseValuePerRange, calculateIRPFTaxPerRange}
