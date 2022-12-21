@@ -1,10 +1,9 @@
-import app from '@src/index';
-import request from 'supertest';
+import { effectiveRate } from '@src/effec';
 
-describe('Beach IRPF functional tests', () => {
-  it('Should get main route', async () => {
-    const res = await request(app).get('/');
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('message');
-  });
-});
+describe('Effective rate',()=>{
+  test('Calculate effective rate - falsificação', () => {
+    const income: number = 5000
+    const irpf: number= 505.64
+    expect(effectiveRate(irpf,income)).toEqual(10.11)
+  })
+})
