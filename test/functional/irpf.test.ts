@@ -45,6 +45,17 @@ describe("Register deductions test", () => {
   });
 });
 
+describe('Should throw exception', () => {
+  const deduction = {
+    value: -1,
+    description: "Despesas com saude"
+  }
+  const res: any = createDeduction(deduction);
+  expect(res.statusCode).toEqual(400);
+  const res_error = (res.error).toString();
+  expect(res_error).toEqual('Error: ValorDeducaoInvalidoException');
+})
+
 describe("Dependent addition test", () => {
   test.each([
     [

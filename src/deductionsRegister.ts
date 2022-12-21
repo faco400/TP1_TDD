@@ -34,8 +34,8 @@ export function calculateDeductionTotals(deductionlist: IDeduction[]) {
 
 export function createDeduction(deduction: IDeduction) {
   try {
-    if (deduction.value < 0)
-      throw new Error("ValorRendimentoInvalidoException");
+    if (deduction.value < 0 || !deduction.value)
+      throw new Error("ValorDeducaoInvalidoException");
     if (deduction.description === "" || !deduction.description)
       throw new Error("DescricaoEmBrancoException");
 
@@ -49,7 +49,10 @@ export function createDeduction(deduction: IDeduction) {
     };
     return res_data;
   } catch (error) {
-    return error;
+    return {
+      statusCode: 400,
+      error: error,
+    };
   }
 }
 
