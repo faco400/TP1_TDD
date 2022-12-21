@@ -26,7 +26,7 @@ export function createDeduction(deduction: IDeduction) {
   try{
     if (deduction.value < 0)
       throw new Error('ValorRendimentoInvalidoException')
-    if (deduction.description === "")
+    if (deduction.description === "" || !deduction.description)
       throw new Error('DescricaoEmBrancoException')
 
     deductionlist.push(deduction)
