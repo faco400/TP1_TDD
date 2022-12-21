@@ -40,4 +40,30 @@ describe('IRPF functional tests', () => {
     })
     expect(totalDeduction).toEqual(calculateDeductionTotals(deductionlist))
   })
+
+  test('Should register three different deductions', () => {
+    const deductionlist: IDeduction[] = [
+      {
+        value: 500,
+        description: 'Pensao alimenticia',
+      },
+      {
+        value: 2000,
+        description: 'Despesas com educacao',
+      },
+      {
+        value: 1500,
+        description: 'Despesas com saude',
+      }
+    ]
+    let totalDeduction = 0;
+    deductionlist.map((deduction) => {
+      const res: any = createDeduction(deduction);
+      expect(res.statusCode).toEqual(200);
+      const lastdeduction = res.response.pop()
+      expect(lastdeduction).toEqual(deduction)
+      totalDeduction += res.totalDeduction
+    })
+    expect(totalDeduction).toEqual(calculateDeductionTotals(deductionlist))
+  })
 });
