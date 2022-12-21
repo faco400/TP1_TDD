@@ -6,9 +6,12 @@ describe('Income tests', () => {
       value: 3000,
       description: "Dividendos recebidos por meio de fundos imobiliários"
     }
-    expect(registerIncome(data)).toEqual({
+    const res: any = registerIncome(data);
+    expect(res.statusCode).toEqual(200);
+    expect(res.response.pop()).toEqual({
       value: 3000,
       description: "Dividendos recebidos por meio de fundos imobiliários"
-    })
+    });
+    expect(res.totalIncomes).toEqual(3000);
   });
 });
