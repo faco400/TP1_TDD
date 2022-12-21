@@ -6,6 +6,20 @@ export interface IDeduction {
 const deductionlist: IDeduction[] = []
 
 export function createDeduction(deduction: IDeduction) {
-  deductionlist.push(deduction);
-  return deduction
+  try{
+    const deduction = {
+      value: 5000,
+      description: 'Previdencia Privada',
+    }
+    if (deduction.value < 0)
+      throw new Error('ValorRendimentoInvalidoException')
+    if (deduction.description === "")
+      throw new Error('DescricaoEmBrancoException')
+    return deduction;
+  }catch(error){
+    return error;
+  }
+  return{
+    
+  } 
 }
