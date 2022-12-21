@@ -9,49 +9,7 @@ import {
   addDependentsList,
 } from "@src/deductionsRegister";
 
-describe("IRPF functional tests", () => {
-  test("Should add dependent", () => {
-    const dependent: IDependent = {
-      name: "Arthur Sena",
-      birthDate: new Date("06/08/2000"),
-    };
-
-    const res: any = addDependent(dependent);
-
-    expect(res?.statusCode).toEqual(200);
-    expect(res?.response?.pop()).toEqual(dependent);
-  });
-  test("Should add many dependents", () => {
-    const dependents: IDependent[] = [
-      {
-        name: "Arthur Sena",
-        birthDate: new Date("06/08/2000"),
-      },
-      {
-        name: "Ayrton Sena",
-        birthDate: new Date("20/04/2000"),
-      },
-    ];
-
-    const res: any = addDependentsList(dependents);
-
-    expect(res?.statusCode).toEqual(200);
-    expect(
-      res?.response?.slice(
-        res?.response?.length - dependents?.length,
-        res?.response?.length
-      )
-    ).toEqual(dependents);
-  });
-  test("Should not be able to add dependent", () => {
-    const dependent: IDependent = {} as IDependent;
-
-    const res: any = addDependent(dependent);
-
-    expect(res?.statusCode).toEqual(400);
-    expect(res?.error?.message).toEqual("NomeEmBrancoException");
-  });
-});
+describe("IRPF functional tests", () => {});
 
 describe("Register deductions test", () => {
   test.each([
@@ -84,5 +42,55 @@ describe("Register deductions test", () => {
       totalDeduction += res.totalDeduction;
     });
     expect(totalDeduction).toEqual(expected.totalDeduction);
+  });
+});
+
+describe("Dependent addition test", () => {
+  test.each([
+    [
+      {
+        name: "Arthur Sena",
+        birthDate: new Date("06/08/2000"),
+      },
+    ],
+    [
+      [
+        {
+          name: "Arthur Sena",
+          birthDate: new Date("06/08/2000"),
+        },
+        {
+          name: "Ayrton Sena",
+          birthDate: new Date("20/04/2000"),
+        },
+      ],
+    ],
+    [{}],
+  ])("Should add one or many dependents", (dependents) => {
+    if (dependents?.hasOwnProperty("length")) {
+      const res: any = addDependentsList(dependents as IDependent[]);
+
+      expect(res?.statusCode).toEqual(200);
+      expect(
+        res?.response?.slice(
+          // @ts-ignore
+          res?.response?.length - dependents?.length,
+          res?.response?.length
+        )
+      ).toEqual(dependents);
+      return;
+    }
+
+    const res: any = addDependent(dependents as IDependent);
+
+    // @ts-ignore
+    if (!dependents?.name) {
+      expect(res?.statusCode).toEqual(400);
+      expect(res?.error?.message).toEqual("NomeEmBrancoException");
+      return;
+    }
+
+    expect(res?.statusCode).toEqual(200);
+    expect(res?.response?.pop()).toEqual(dependents);
   });
 });
