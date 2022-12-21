@@ -14,7 +14,6 @@ export function calculateIncomeTotals(data: IIncome[]) {
         const totalIncome = data.reduce(function (accumulator, income) {
             return accumulator + income.value
         }, 0);
-        console.log("total income", totalIncome);
         return totalIncome;
     } catch (error) {
         return error
@@ -37,5 +36,3 @@ export function registerIncome(income: IIncome) {
         return error
     }
 }
-
-

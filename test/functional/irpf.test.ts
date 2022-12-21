@@ -40,4 +40,38 @@ describe('Income tests', () => {
     })
     expect(totalIncome).toEqual(calculateIncomeTotals(data))
   });
+
+  test('Should create a income by triangulate data', () => {
+    const data: IIncome[] = [
+      {
+        value: 4000,
+        description: "Rendimento referente ao salário.",
+      },
+      {
+        value: 1000,
+        description: "Rendimento dividendos.",
+      },
+      {
+        value: 1500,
+        description: "Renda Extra.",
+      },
+      {
+        value: 2500,
+        description: "Participação em lucro empresarial.",
+      },
+      {
+        value: 1500,
+        description: "Lucro na bolsa de valores.",
+      }
+    ];
+    let totalIncome = 0;
+    data.map((income) => {
+      const res: any = registerIncome(income);
+      expect(res.statusCode).toEqual(200);
+      const lastIncome = res.response.pop()
+      expect(lastIncome).toEqual(income)
+      totalIncome += res.totalIncomes;
+    })
+    expect(totalIncome).toEqual(calculateIncomeTotals(data))
+  });
 });
