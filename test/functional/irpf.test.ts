@@ -74,4 +74,42 @@ describe('Income tests', () => {
     })
     expect(totalIncome).toEqual(calculateIncomeTotals(data))
   });
+
+  test('Should test the exception of type ValorRendimentoInvalidoException', () => {
+    const data: IIncome[] = [
+      {
+        value: -1000,
+        description: "Rendimento referente ao salário.",
+      },
+      {
+        value: 0,
+        description: "Rendimento dividendos.",
+      },
+      {
+        value: Number(null),
+        description: "Rendimento dividendos.",
+      },
+    ];
+    data.map((income) => {
+      const res: any = registerIncome(income);
+      const exception = (res.response).toString()
+      expect(res?.statusCode).toEqual(400);
+      expect(exception).toEqual("Error: ValorRendimentoInvalidoException");
+    });
+  });
+
+  test('Should test the exception of type DescricaoEmBrancoException', () => {
+    const data: IIncome[] = [
+      {
+        value: 4000,
+        description: "",
+      },
+    ];
+    data.map((income) => {
+      const res: any = registerIncome(income);
+      const exception = (res.response).toString()
+      expect(res?.statusCode).toEqual(400);
+      expect(exception).toEqual("Error: DescricaoEmBrancoException");
+    });
+  });
 });

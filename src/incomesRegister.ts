@@ -22,8 +22,8 @@ export function calculateIncomeTotals(data: IIncome[]) {
 
 export function registerIncome(income: IIncome) {
     try {
-        if (income.value <= 0) throw new Error('ValorRendimentoInvalidoException');
-        if (income.description === "") throw new Error('DescricaoEmBrancoException');
+        if (income.value <= 0 || !income.value) throw new Error('ValorRendimentoInvalidoException');
+        if (income.description === "" || !income.description) throw new Error('DescricaoEmBrancoException');
         data.push(income);
         const total = calculateIncomeTotals(data);
         const res_data: IResponse = {
@@ -33,6 +33,9 @@ export function registerIncome(income: IIncome) {
         }
         return res_data;
     } catch (error) {
-        return error
+        return {
+            statusCode: 400,
+            response: error
+        }
     }
 }
