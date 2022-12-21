@@ -43,6 +43,14 @@ describe("IRPF functional tests", () => {
       )
     ).toEqual(dependents);
   });
+  test("Should not be able to add dependent", () => {
+    const dependent: IDependent = {} as IDependent;
+
+    const res: any = addDependent(dependent);
+
+    expect(res?.statusCode).toEqual(400);
+    expect(res?.error?.message).toEqual("NomeEmBrancoException");
+  });
 });
 
 describe("Register deductions test", () => {

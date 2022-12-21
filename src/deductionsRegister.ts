@@ -66,7 +66,10 @@ export function addDependent(dependent: IDependent) {
       response: dependentslist,
     };
   } catch (error) {
-    return error;
+    return {
+      statusCode: 400,
+      error: error,
+    };
   }
 }
 
