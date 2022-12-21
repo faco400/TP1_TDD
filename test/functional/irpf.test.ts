@@ -46,37 +46,15 @@ describe("Register deductions test", () => {
 });
 
 describe('Should throw exception', () => {
-  test('Throw ValorDeducaoInvalidoException if value negative', () => {
-    const deduction = {
-      value: -1,
-      description: "Despesas com saude"
-    }
-    const res: any = createDeduction(deduction);
-    expect(res.statusCode).toEqual(400);
-    const res_error = (res.error).toString();
-    expect(res_error).toEqual('Error: ValorDeducaoInvalidoException');
-  })
-  
-  test('Throw DescricaoEmBrancoException if value empty', () => {
-    const deduction = {
-      value: 1000,
-      description: ""
-    }
-    const res: any = createDeduction(deduction);
-    expect(res.statusCode).toEqual(400);
-    const res_error = (res.error).toString();
-    expect(res_error).toEqual('Error: DescricaoEmBrancoException');
-  })
-
-  test('Throw DescricaoEmBrancoException if value empty', () => {
-    const deduction = {
-      value: Number(null),
-      description: "Despesas com educacao"
-    }
-    const res: any = createDeduction(deduction);
-    expect(res.statusCode).toEqual(400);
-    const res_error = (res.error).toString();
-    expect(res_error).toEqual('Error: ValorDeducaoInvalidoException');
+  test.each([
+    [{value: -1, description: "Despesas com saude"}, 'Error: ValorDeducaoInvalidoException'],
+    [{value: 1000, description: ""}, 'Error: DescricaoEmBrancoException'],
+    [{value: Number(null), description: "Despesas com educacao"}, 'Error: ValorDeducaoInvalidoException']
+  ])('Throw any exception', (deduction, exception) =>{
+      const res: any = createDeduction(deduction);
+      expect(res.statusCode).toEqual(400);
+      const res_error = (res.error).toString();
+      expect(res_error).toEqual(exception);
   })
 })
 
