@@ -1,17 +1,14 @@
-import app from '@src/index';
-import request from 'supertest';
-import { createIncome, IIncome } from '@src/incomesRegister';
+import { IIncome, registerIncome } from '@src/incomesRegister';
 
-describe('IRPF functional tests', () => {
-  test('Should create a income', () => {
+describe('Income tests', () => {
+  test('Should create income by falsificate data', () => {
     const data: IIncome = {
-      value: 4000,
-      description: "Rendimento referente ao salário.",
+      value: 3000,
+      description: "Dividendos recebidos por meio de fundos imobiliários"
     }
-    expect(createIncome(data)).toEqual({
-      value: 4000,
-      description: "Rendimento referente ao salário.",
+    expect(registerIncome(data)).toEqual({
+      value: 3000,
+      description: "Dividendos recebidos por meio de fundos imobiliários"
     })
   });
 });
-
