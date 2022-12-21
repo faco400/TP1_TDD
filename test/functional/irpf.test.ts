@@ -67,6 +67,17 @@ describe('Should throw exception', () => {
     const res_error = (res.error).toString();
     expect(res_error).toEqual('Error: DescricaoEmBrancoException');
   })
+
+  test('Throw DescricaoEmBrancoException if value empty', () => {
+    const deduction = {
+      value: Number(null),
+      description: "Despesas com educacao"
+    }
+    const res: any = createDeduction(deduction);
+    expect(res.statusCode).toEqual(400);
+    const res_error = (res.error).toString();
+    expect(res_error).toEqual('Error: ValorDeducaoInvalidoException');
+  })
 })
 
 
