@@ -1,23 +1,12 @@
 import { effectiveRate } from '@src/effec';
 
 describe('Effective rate',()=>{
-  test('Calculate effective rate - falsificação', () => {
-    const income: number = 5000
-    const irpf: number= 505.64
-    expect(effectiveRate(irpf,income)).toEqual(10.11)
+  test.each([
+    [5000,505.64,10.11],
+    [7000, 1028.14,14.68],
+    [10000,1743.14,17.43]
+  ])('Calculate effective rate', (income,irpf,expected) => {
+    expect(effectiveRate(irpf,income)).toEqual(expected)
   })
-
-  test('Calculate effective rate - duplicação', () => {
-    const income: number = 7000
-    const irpf: number= 1028.14
-    expect(effectiveRate(irpf,income)).toEqual(14.68)
-  })
-
-  test('Calculate effective rate - triangulação', () => {
-    const income: number = 10000
-    const irpf: number= 1743.14
-    expect(effectiveRate(irpf,income)).toEqual(17.43)
-  })
-
 
 })
