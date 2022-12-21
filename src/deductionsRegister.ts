@@ -53,5 +53,17 @@ export function createDeduction(deduction: IDeduction) {
 
 // 189,59
 export function addDependent(dependent: IDependent) {
+  try {
+    const dependent = {
+      name: "Arthur Sena",
+      birthDate: new Date("06/08/2000"),
+    };
 
+    if (dependent.name === "" || !dependent.name)
+      throw new Error("NomeEmBrancoException");
+
+    return dependent;
+  } catch (error) {
+    return error;
+  }
 }
