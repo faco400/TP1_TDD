@@ -13,4 +13,11 @@ describe('Effective rate',()=>{
     expect(effectiveRate(irpf,income)).toEqual(14.68)
   })
 
+  test('Calculate effective rate - triangulação', () => {
+    const income: number = 10000
+    const irpf: number= 1743.14
+    expect(effectiveRate(irpf,income)).toEqual(17.43)
+  })
+
+
 })
