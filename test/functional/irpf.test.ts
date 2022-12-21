@@ -6,6 +6,7 @@ import {
   calculateDeductionTotals,
   IDependent,
   addDependent,
+  addDependentsList,
 } from "@src/deductionsRegister";
 
 describe("IRPF functional tests", () => {
@@ -14,8 +15,33 @@ describe("IRPF functional tests", () => {
       name: "Arthur Sena",
       birthDate: new Date("06/08/2000"),
     };
-    
-    expect(addDependent(dependent)).toEqual(dependent);
+
+    const res: any = addDependent(dependent);
+
+    expect(res?.statusCode).toEqual(200);
+    expect(res?.response?.pop()).toEqual(dependent);
+  });
+  test("Should add many dependents", () => {
+    const dependents: IDependent[] = [
+      {
+        name: "Arthur Sena",
+        birthDate: new Date("06/08/2000"),
+      },
+      {
+        name: "Ayrton Sena",
+        birthDate: new Date("20/04/2000"),
+      },
+    ];
+
+    const res: any = addDependentsList(dependents);
+
+    expect(res?.statusCode).toEqual(200);
+    expect(
+      res?.response?.slice(
+        res?.response?.length - dependents?.length,
+        res?.response?.length
+      )
+    ).toEqual(dependents);
   });
 });
 

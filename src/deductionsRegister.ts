@@ -9,6 +9,8 @@ export interface IDependent {
 }
 
 const deductionlist: IDeduction[] = [];
+const dependentslist: IDependent[] = [];
+
 export interface DeductionResponse {
   statusCode: number;
   response: IDeduction[];
@@ -54,15 +56,30 @@ export function createDeduction(deduction: IDeduction) {
 // 189,59
 export function addDependent(dependent: IDependent) {
   try {
-    const dependent = {
-      name: "Arthur Sena",
-      birthDate: new Date("06/08/2000"),
-    };
-
     if (dependent.name === "" || !dependent.name)
       throw new Error("NomeEmBrancoException");
 
-    return dependent;
+    dependentslist.push(dependent);
+
+    return {
+      statusCode: 200,
+      response: dependentslist,
+    };
+  } catch (error) {
+    return error;
+  }
+}
+
+export function addDependentsList(dependents: IDependent[]) {
+  try {
+    dependents.forEach((item) => {
+      addDependent(item);
+    })
+
+    return {
+      statusCode: 200,
+      response: dependentslist,
+    };
   } catch (error) {
     return error;
   }
