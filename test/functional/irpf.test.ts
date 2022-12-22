@@ -7,7 +7,6 @@ import {
   calculateTotalRangeBaseValues, 
   calculateTotalIRPF} from '@src/calc';
 import { effectiveRate } from '@src/effec';
-import app from "@src/index";
 import request from "supertest";
 import { IIncome, registerIncome, calculateIncomeTotals } from '@src/incomesRegister';
 import {
