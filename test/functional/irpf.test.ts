@@ -122,6 +122,7 @@ describe('Income tests', () => {
       expect(exception).toEqual("Error: DescricaoEmBrancoException");
     });
   });
+});
 
 describe("Register deductions test", () => {
   test.each([
