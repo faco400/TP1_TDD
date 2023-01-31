@@ -10,6 +10,8 @@ const table_2022: Table = [
     [4664.68, Infinity, 27.50]
 ]
 
+const porcentage_value = 100;
+
 function sum(list: number[]): number {
     return list.reduce((acc, value) => acc + value, 0)
 }
@@ -31,7 +33,7 @@ function calculateBaseValuePerRange(baseValue: number, table: Table) {
 }
 
 function calculateIRPFTaxPerRange(baseValues: number[], table: Table): number[] {
-    return baseValues.map((value, i) => value * (table[i][2] / 100))
+    return baseValues.map((value, i) => value * (table[i][2] / porcentage_value))
 }
 
 function calculateTotalRangeBaseValues(baseValues: number[]): number {
