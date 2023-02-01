@@ -20,16 +20,18 @@ function calculateBaseValue(incomeValues: number[], deductions: number[]): numbe
     return sum(incomeValues) - sum(deductions)
 }
 
+function getIRPFValueInRange(baseValue: number, range: Array<number>) {
+    if (baseValue > range[1]) {
+        return range[1] - range[0]
+    }
+    if (baseValue < range[0]) {
+        return 0
+    }
+    return baseValue - range[0]
+}
+
 function calculateBaseValuePerRange(baseValue: number, table: Table) {
-    return table.map((range) => {
-        if (baseValue > range[1]) {
-            return range[1] - range[0]
-        }
-        if (baseValue < range[0]) {
-            return 0
-        }
-        return baseValue - range[0]
-    })
+    return table.map((range => getIRPFValueInRange(baseValue, range)))
 }
 
 function calculateIRPFTaxPerRange(baseValues: number[], table: Table): number[] {
