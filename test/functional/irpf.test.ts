@@ -9,14 +9,7 @@ import {
 import { effectiveRate } from '@src/effec';
 import request from "supertest";
 import { IIncome, registerIncome, calculateIncomeTotals } from '@src/incomesRegister';
-import {
-  createDeduction,
-  IDeduction,
-  calculateDeductionTotals,
-  IDependent,
-  addDependent,
-  addDependentsList,
-} from "@src/deductionsRegister";
+import { Deduction, IDependent } from '@src/deductionsRegister';
 
 describe('Income tests', () => {
   test('Should create income by falsificate data', () => {
@@ -156,7 +149,9 @@ describe("Register deductions test", () => {
   ])("Should register one or more deductions", (deductions, expected) => {
     let totalDeduction = 0;
     deductions.map((deduction) => {
-      const res: any = createDeduction(deduction);
+      var deduct_obj = new Deduction()
+
+      const res: any = deduct_obj.createDeduction(deduction);
       expect(res.statusCode).toEqual(res.statusCode);
       const lastdeduction = res.response.pop();
       expect(lastdeduction).toEqual(deduction);
@@ -172,7 +167,8 @@ describe('Should throw exception', () => {
     [{value: 1000, description: ""}, 'Error: DescricaoEmBrancoException'],
     [{value: Number(null), description: "Despesas com educacao"}, 'Error: ValorDeducaoInvalidoException']
   ])('Throw any exception', (deduction, exception) =>{
-      const res: any = createDeduction(deduction);
+      var deduct_obj = new Deduction();
+      const res: any = deduct_obj.createDeduction(deduction);
       expect(res.statusCode).toEqual(400);
       const res_error = (res.error).toString();
       expect(res_error).toEqual(exception);
@@ -202,8 +198,9 @@ describe("Dependent addition test", () => {
     ],
     [{}],
   ])("Should add one or many dependents", (dependents) => {
+    var deduct_obj = new Deduction();
     if (dependents?.hasOwnProperty("length")) {
-      const res: any = addDependentsList(dependents as IDependent[]);
+      const res: any = deduct_obj.addDependentsList(dependents as IDependent[]);
 
       expect(res?.statusCode).toEqual(200);
       expect(
@@ -216,7 +213,7 @@ describe("Dependent addition test", () => {
       return;
     }
 
-    const res: any = addDependent(dependents as IDependent);
+    const res: any = deduct_obj.addDependent(dependents as IDependent);
 
     // @ts-ignore
     if (!dependents?.name) {
